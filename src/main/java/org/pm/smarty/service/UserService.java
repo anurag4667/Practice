@@ -9,6 +9,7 @@ import org.pm.smarty.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -33,6 +34,14 @@ public class UserService {
         }
 
         User user = userRepository.save(UserMapper.toModel(userRequestDto));
+
+        return UserMapper.toDto(user);
+    }
+
+    public UserResponseDto getUser(UUID uuid){
+
+
+        User user = userRepository.findById(uuid).orElseThrow( () -> new RuntimeException("user does not exist"));
 
         return UserMapper.toDto(user);
     }
